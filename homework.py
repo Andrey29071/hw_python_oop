@@ -95,7 +95,7 @@ class SportsWalking(Training):
 @dataclass
 class Swimming(Training):
     """Тренировка: плавание."""
-    
+
     length_pool: float
     count_pool: float
 
