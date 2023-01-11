@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import ClassVar, List, Dict
+from typing import ClassVar, Dict
 
 
 @dataclass
