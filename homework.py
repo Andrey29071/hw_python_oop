@@ -1,5 +1,6 @@
 from dataclasses import dataclass
-from typing import ClassVar, List
+from typing import ClassVar
+from typing import List
 
 
 @dataclass
@@ -48,7 +49,7 @@ class Training:
 
     def show_training_info(self) -> InfoMessage:
         """Вернуть информационное сообщение о выполненной тренировке."""
-        return InfoMessage(List(self).__name__,
+        return InfoMessage(type(self).__name__,
                            self.duration,
                            self.get_distance(),
                            self.get_mean_speed(),
