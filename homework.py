@@ -1,6 +1,5 @@
 from dataclasses import dataclass
-from typing import ClassVar, Dict
-
+from typing import Dict, List, ClassVar
 
 @dataclass
 class InfoMessage:
@@ -115,7 +114,7 @@ class Swimming(Training):
                 * self.duration)
 
 
-def read_package(workout_type: str, data: list[int]) -> Training:
+def read_package(workout_type: str, data: List[int]) -> Training:
     """Прочитать данные полученные от датчиков."""
     workout: Dict[str, type] = {
         'SWM': Swimming,
@@ -134,7 +133,7 @@ def main(training: Training) -> None:
 
 
 if __name__ == '__main__':
-    packages: list[tuple[str, list[int]]] = [
+    packages: List[tuple[str, List[int]]] = [
         ('SWM', [720, 1, 80, 25, 40]),
         ('RUN', [15000, 1, 75]),
         ('WLK', [9000, 1, 75, 180]),
