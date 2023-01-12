@@ -2,7 +2,8 @@ from dataclasses import dataclass, asdict
 from typing import Dict, List, ClassVar
 
 
-@dataclass (init=True, repr=False, eq=False, order=False, unsafe_hash=False, frozen=False)
+@dataclass(init=True, repr=False, eq=False,
+           order=False, unsafe_hash=False, frozen=False)
 class InfoMessage:
     """Информационное сообщение о тренировке."""
 
@@ -11,7 +12,6 @@ class InfoMessage:
     distance: float
     speed: float
     calories: float
-    
     message: str = ('Тип тренировки: {training_type}; '
                     'Длительность: {duration:.3f} ч.; '
                     'Дистанция: {distance:.3f} км; '
@@ -23,7 +23,8 @@ class InfoMessage:
         return self.message.format(**asdict(self))
 
 
-@dataclass (init=True, repr=False, eq=False, order=False, unsafe_hash=False, frozen=False)
+@dataclass(init=True, repr=False, eq=False,
+           order=False, unsafe_hash=False, frozen=False)
 class Training:
     """Базовый класс тренировки."""
 
@@ -58,7 +59,8 @@ class Training:
                            )
 
 
-@dataclass (init=True, repr=False, eq=False, order=False, unsafe_hash=False, frozen=False)
+@dataclass(init=True, repr=False, eq=False,
+           order=False, unsafe_hash=False, frozen=False)
 class Running(Training):
     """Тренировка: бег."""
 
@@ -72,7 +74,8 @@ class Running(Training):
                 / self.M_IN_KM * (self.duration * self.MIN_IN_H))
 
 
-@dataclass (init=True, repr=False, eq=False, order=False, unsafe_hash=False, frozen=False)
+@dataclass(init=True, repr=False, eq=False,
+           order=False, unsafe_hash=False, frozen=False)
 class SportsWalking(Training):
     """Тренировка: спортивная ходьба."""
 
@@ -82,19 +85,20 @@ class SportsWalking(Training):
     CALORIES_SPEED_HEIGHT_MULTIPLIER: ClassVar[float] = 0.029
     KMH_IN_MSEC: ClassVar[float] = 0.278
     CM_IN_M: ClassVar[int] = 100
-    SQRT: ClassVar[int] = 2
+    squared: ClassVar[int] = 2
 
     def get_spent_calories(self) -> float:
         """Метод взвращает количество затраченных калорий."""
         return ((self.CALORIES_WEIGHT_MULTIPLIER
                 * self.weight
-                + ((self.get_mean_speed() * self.KMH_IN_MSEC)**self.SQRT
+                + ((self.get_mean_speed() * self.KMH_IN_MSEC)**self.squared
                  / (self.height / self.CM_IN_M)
                  * self.CALORIES_SPEED_HEIGHT_MULTIPLIER * self.weight))
                 * self.duration * self.MIN_IN_H)
 
 
-@dataclass (init=True, repr=False, eq=False, order=False, unsafe_hash=False, frozen=False)
+@dataclass(init=True, repr=False, eq=False,
+           order=False, unsafe_hash=False, frozen=False)
 class Swimming(Training):
     """Тренировка: плавание."""
 
@@ -117,9 +121,9 @@ class Swimming(Training):
                 * self.duration)
 
 
-def read_package(workout_type: str, data: List[int]) -> Training:
+def read_package(workout_type: str, data: list[int]) -> Training:
     """Прочитать данные полученные от датчиков."""
-    workout: Dict[str, type] = {
+    workout: Dict[str, type[Training]] = {
         'SWM': Swimming,
         'RUN': Running,
         'WLK': SportsWalking
@@ -143,5 +147,5 @@ if __name__ == '__main__':
     ]
 
     for workout_type, data in packages:
-        training: dict[str, type] = read_package(workout_type, data)
+        training: Dict[str, list[int]] = read_package(workout_type, data)
         main(training)
