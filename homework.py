@@ -1,5 +1,6 @@
 from dataclasses import dataclass, asdict
 from typing import Dict, List, ClassVar
+from collections.abc import Iterable
 
 
 @dataclass(init=True, repr=False, eq=False,
@@ -121,7 +122,7 @@ class Swimming(Training):
                 * self.duration)
 
 
-def read_package(workout_type: str, data: list[int]) -> Training:
+def read_package(workout_type: str, data: Iterable[int]) -> Training:
     """Прочитать данные полученные от датчиков."""
     workout: Dict[str, type[Training]] = {
         'SWM': Swimming,
