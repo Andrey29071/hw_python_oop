@@ -1,9 +1,8 @@
 from dataclasses import dataclass, asdict
-from typing import Dict, List, ClassVar
+from typing import Dict, List, ClassVar, Union
 
 
-@dataclass(init=True, repr=False, eq=False,
-           order=False, unsafe_hash=False, frozen=False)
+@dataclass(repr=False, eq=False)
 class InfoMessage:
     """Информационное сообщение о тренировке."""
 
@@ -12,19 +11,18 @@ class InfoMessage:
     distance: float
     speed: float
     calories: float
-    message: str = ('Тип тренировки: {training_type}; '
-                    'Длительность: {duration:.3f} ч.; '
-                    'Дистанция: {distance:.3f} км; '
-                    'Ср. скорость: {speed:.3f} км/ч; '
-                    'Потрачено ккал: {calories:.3f}.')
+    message: ClassVar[str] = ('Тип тренировки: {training_type}; '
+                              'Длительность: {duration:.3f} ч.; '
+                              'Дистанция: {distance:.3f} км; '
+                              'Ср. скорость: {speed:.3f} км/ч; '
+                              'Потрачено ккал: {calories:.3f}.')
 
     def get_message(self) -> str:
         """Метод возвращает строку сообщения."""
         return self.message.format(**asdict(self))
 
 
-@dataclass(init=True, repr=False, eq=False,
-           order=False, unsafe_hash=False, frozen=False)
+@dataclass(repr=False, eq=False)
 class Training:
     """Базовый класс тренировки."""
 
@@ -59,8 +57,7 @@ class Training:
                            )
 
 
-@dataclass(init=True, repr=False, eq=False,
-           order=False, unsafe_hash=False, frozen=False)
+@dataclass(repr=False, eq=False)
 class Running(Training):
     """Тренировка: бег."""
 
@@ -74,8 +71,7 @@ class Running(Training):
                 / self.M_IN_KM * (self.duration * self.MIN_IN_H))
 
 
-@dataclass(init=True, repr=False, eq=False,
-           order=False, unsafe_hash=False, frozen=False)
+@dataclass(repr=False, eq=False)
 class SportsWalking(Training):
     """Тренировка: спортивная ходьба."""
 
@@ -97,8 +93,7 @@ class SportsWalking(Training):
                 * self.duration * self.MIN_IN_H)
 
 
-@dataclass(init=True, repr=False, eq=False,
-           order=False, unsafe_hash=False, frozen=False)
+@dataclass(repr=False, eq=False)
 class Swimming(Training):
     """Тренировка: плавание."""
 
@@ -121,7 +116,7 @@ class Swimming(Training):
                 * self.duration)
 
 
-def read_package(workout_type: str, data: List[int]) -> Training:
+def read_package(workout_type: str, data: list) -> Union[str, type[Training]]:
     """Прочитать данные полученные от датчиков."""
     workout: Dict[str, type[Training]] = {
         'SWM': Swimming,
@@ -147,5 +142,5 @@ if __name__ == '__main__':
     ]
 
     for workout_type, data in packages:
-        training: Dict[str, list[int]] = read_package(workout_type, data)
+        training: Dict[str, type[Training]] = read_package(workout_type, data)
         main(training)
