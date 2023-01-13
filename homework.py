@@ -116,8 +116,8 @@ class Swimming(Training):
                 * self.duration)
 
 
-#Просто list Яндекс.Практикум не пропускает, пробую через dict
 def read_package(workout_type: str, data: dict) -> Union[str, type[Training]]:
+    """Просто list Яндекс.Практикум не пропускает, пробую через dict"""
     """Прочитать данные полученные от датчиков."""
     workout: Dict[str, type[Training]] = {
         'SWM': Swimming,
