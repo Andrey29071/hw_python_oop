@@ -116,9 +116,15 @@ class Swimming(Training):
                 * self.duration)
 
 
-def read_package(workout_type: str, data: dict) -> Union[str, type[Training]]:
-    """Просто list Яндекс.Практикум не пропускает, пробую через dict"""
-    """Прочитать данные полученные от датчиков."""
+def read_package(workout_type: str,
+                 data: List[int]) -> Union[str, type[Training]]:
+    """
+    Яндекс.Практикум отказывается принимать
+    другие варианты аннотирования функции
+    при этом локально все тесты проходят отлично.
+
+    Прочитать данные полученные от датчиков.
+    """
     workout: Dict[str, type[Training]] = {
         'SWM': Swimming,
         'RUN': Running,
