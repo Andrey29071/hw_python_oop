@@ -115,6 +115,7 @@ class Swimming(Training):
                 * self.CALORIES_WEIGHT_MULTIPLIER * self.weight
                 * self.duration)
 
+
 #Просто list Яндекс.Практикум не пропускает, пробую через dict
 def read_package(workout_type: str, data: dict) -> Union[str, type[Training]]:
     """Прочитать данные полученные от датчиков."""
