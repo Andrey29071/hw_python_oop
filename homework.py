@@ -116,7 +116,7 @@ class Swimming(Training):
                 * self.duration)
 
 
-def read_package(workout_type: str, data: list) -> Union[str, type[Training]]:
+def read_package(workout_type: str, data: dict) -> Union[str, type[Training]]:
     """Прочитать данные полученные от датчиков."""
     workout: Dict[str, type[Training]] = {
         'SWM': Swimming,
