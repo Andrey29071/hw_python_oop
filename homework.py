@@ -118,13 +118,7 @@ class Swimming(Training):
 
 def read_package(workout_type: str,
                  data: Sequence[int]) -> Union[str, Training]:
-    """
-    Яндекс.Практикум отказывается принимать
-    другие варианты аннотирования функции
-    при этом локально все тесты проходят отлично.
-
-    Прочитать данные полученные от датчиков.
-    """
+    """Прочитать данные полученные от датчиков."""
     workout: Dict[str, type[Training]] = {
         'SWM': Swimming,
         'RUN': Running,
