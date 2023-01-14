@@ -1,5 +1,5 @@
 from dataclasses import dataclass, asdict
-from typing import Dict, List, ClassVar, Union
+from typing import Dict, List, ClassVar, Union, Sequence
 
 
 @dataclass(repr=False, eq=False)
@@ -45,7 +45,7 @@ class Training:
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
         raise NotImplementedError(f'Требуется определить get_spent_calories() '
-                                  f'в классе {__class__.__name__}')
+                                  f'в классе {__name__}')
 
     def show_training_info(self) -> InfoMessage:
         """Вернуть информационное сообщение о выполненной тренировке."""
@@ -117,7 +117,7 @@ class Swimming(Training):
 
 
 def read_package(workout_type: str,
-                 data: List[int]) -> Union[str, type[Training]]:
+                 data: Sequence[int]) -> Union[str, Training]:
     """
     Яндекс.Практикум отказывается принимать
     другие варианты аннотирования функции
@@ -131,7 +131,7 @@ def read_package(workout_type: str,
         'WLK': SportsWalking
     }
     if workout_type not in workout:
-        return (f"Тренировки - {workout_type}, не найдено")
+        return (f"Тренировка - {workout_type}, не найдено")
     return workout[workout_type](*data)
 
 
@@ -142,12 +142,12 @@ def main(training: Training) -> None:
 
 
 if __name__ == '__main__':
-    packages: List[tuple[str, List[int]]] = [
+    packages: Sequence[tuple[str, List[int]]] = [
         ('SWM', [720, 1, 80, 25, 40]),
         ('RUN', [15000, 1, 75]),
         ('WLK', [9000, 1, 75, 180]),
     ]
 
     for workout_type, data in packages:
-        training: Dict[str, type[Training]] = read_package(workout_type, data)
+        training: Union[str, Training] = read_package(workout_type, data)
         main(training)
